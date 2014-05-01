@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head> <title> Graph </title> 
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="DrawGraph.js"> </script>
+<script src="Container.js"> </script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+    <div id="Container">
+         <button id="Regionbtn"> Region </button>
+         <button id="ConnectionType">Connection Type</button>
+        <button id="NeuronPosition"> Neuron Position </button>
+    </div>
+
+
+   
+    <br>
+    <button class='region' value="n.soma_region &#61;'H' ">Display Head </button>
+    <button class='region' value=" n.soma_region &#61;'M' ">Display Mid-Body </button>
+    <button class='region' value=" n.soma_region &#61; 'T' ">Display Tail </button>
+    <br>    
+
+     
+     <br>
+     <button class='connectionType' value="c.connection_type &#61; 'EJ' "> EJ Connection </button>
+     <button class='connectionType' value="c.connection_type &#61; 'S' "> S Connection </button>
+     <button class='connectionType' value="c.connection_type &#61; 'Sp' "> Sp Connection </button>
+     <!--  <button class='connectionType' value="c.connection_type &#61;'R'  "> R Connection </button>-->
+     <button class='connectionType' value="c.connection_type &#61; 'Rp' "> Rp Connection </button>
+     <br>
+ 
+ 
+    
+    <br>
+    <button class='partition' value="n.neuron_name LIKE '&#37;L'"> Left </button>
+    <button class='partition' value="n.neuron_name LIKE '&#37;R'"> Right </button>
+    <br>
+
+    <div id="graph"></div>
+    </body>
+</html>
