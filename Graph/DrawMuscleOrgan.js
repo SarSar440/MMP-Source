@@ -1,60 +1,45 @@
+/**
+ * This JavaScript files contains all the functions used to set the nodes and edges, 
+ * and also draw the graph on the html document.
+ */
+
+
+//Declare Global Variables
 var graph = {
-	nodes: [],
-	nodeNums: {},
-	edges: []
+    nodes: [],
+    nodeNums: {},
+    edges: []
 };
 
+//.ready function when the DOM has been loaded
 $(document).ready(function()
 {
-    
-    $("#connections").click(function()
+    $('.tissue').click(function()
     {
-        getNeuronData();
-    });
-
-    $(".region").click(function()
-    {
-        
         var inputString = $(this).val();
         getNeuronData(inputString);
-    });
-    
-    $(".connectionType").click(function()
-    { 
-        
-        var inputString = $(this).val();
-        getNeuronData(inputString);
-
-    });
-
-    $(".partition").click(function()
-    { 
-        
-        var inputString = $(this).val();
-        getNeuronData(inputString);
-
-    });
+    })
 }); 
 
-//using custom WHERE 
+//Function to get the nodes data from specified PHP file.
 function getNeuronData(inputString)
 {
-    //console.log(inputString);
     $.ajax(
     {   
-        url:"neuron2.php",
+        url:"php/SOneuronNodes.php",
         data: inputString,
         success:function(result) 
         {
             removeGraph(); 
             var decoded_neuron = JSON.parse(result);
-
             populateNodes(decoded_neuron);
             getConnectionData(inputString);
         }
     });
 }
 
+//When the node data has been parsed,
+//Populate the nodes
 function populateNodes(decoded_neuron)
 {
     graph.nodes = [];
@@ -74,13 +59,12 @@ function populateNodes(decoded_neuron)
     }
 }
 
-
-
+//function to get the edge JSON from specified PHP file.
 function getConnectionData(inputString)
 {
     $.ajax(
     {   
-        url:"connections2.php",
+        url:"php/SOneuronEdges.php",
         data: inputString,
         success:function(result) 
         {
@@ -92,8 +76,7 @@ function getConnectionData(inputString)
     });
 }
 
-
-
+//function to populate edges
 function populateConnections(decoded_connections) 
 {
 	
@@ -121,11 +104,19 @@ function populateConnections(decoded_connections)
       }
 }
 
-function removeGraph(){
-    d3.select("svg")
-       .remove();
+function removeGraph()
+{
+    graph.nodes = [];
+    graph.edges= [];
+    d3.select("svg").remove();
 }
 
+
+/*Third-party code was used here to help render the graph.
+I have made changes to the code in order to make the graph as my own.
+
+D3.js is licenced under the BSD licence.
+*/
 function drawGraph()
 {
     var data = 
@@ -134,26 +125,34 @@ function drawGraph()
 	'edges': graph.edges
     };
 
-    var w = 900;
-    var h = 800;
+    var w = 850;
+    var h = 750;
 
     //Initialize a default force layout, using the nodes and edges from data
     var force = d3.layout.force()
     .nodes(data.nodes)
     .links(data.edges)
     .size([w, h])
-    .linkDistance(100)
+    .linkDistance(275)
     .gravity(.05)
-    .charge([-120])
+    .charge([-70])
     .start();
     
-
   
     //Create SVG element
     var svg = d3.select("#graph").append("svg")
     .attr("width", w)
     .attr("height", h);
 
+     //create a border to surround the graph
+    var borderPath = svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("height", h)
+    .attr("width", w)
+    .style("stroke", "black")
+    .style("fill", "none")
+    .style("stroke-width", 1);
 
     //Create edges as lines
     var edges = svg.selectAll("line")
@@ -161,7 +160,7 @@ function drawGraph()
     .enter()
     .append("line")
     .style("stroke", "#9ecae1")
-    .style("stroke-width", 1.5);
+    .style("stroke-width", 1);
 
     //Create nodes as circles
     var nodes = svg.selectAll("circle")
@@ -185,13 +184,9 @@ function drawGraph()
      .attr("font-family", "sans-serif")
      .attr("font-size", "9px");
 
-
-
-
-    //Every time the simulation "ticks", this will be called
+    //Every time the simulation "ticks", this is called
     force.on("tick", function() 
     {
-
          texts.attr("transform", function(d) {  return "translate(" + d.x + "," + d.y + ")";  });
 
          edges.attr("x1", function(d) { return d.source.x; })
@@ -201,8 +196,5 @@ function drawGraph()
 
         nodes.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
-
-       
-
     });
 }//end of drawGraph function

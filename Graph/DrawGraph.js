@@ -1,15 +1,61 @@
+/**
+ * This JavaScript files contains all the functions used to set the nodes and edges, 
+ * and also draw the graph on the html document.
+ */
+
+
+//Declare Global Variables
 var graph = {
 	nodes: [],
 	nodeNums: {},
 	edges: []
 };
 
+//.ready function when the DOM has been loaded
 $(document).ready(function()
 {
-    
+    /*Button functions*/
     $("#connections").click(function()
     {
         getNeuronData();
+    });
+
+
+    $('.HconnectionType').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
+    });
+
+      $('.Hneuronposition').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
+    });
+
+    
+    $('.MconnectionType').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
+    });
+
+    $('.Mneuronposition').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
+    });
+
+    $('.TconnectionType').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
+    });
+
+      $('.Tneuronposition').click(function()
+    {
+        var inputString = $(this).val();
+        getNeuronData(inputString);
     });
 
     $(".region").click(function()
@@ -21,10 +67,9 @@ $(document).ready(function()
     
     $(".connectionType").click(function()
     { 
-        
         var inputString = $(this).val();
         getNeuronData(inputString);
-
+        findNeurons(inputString);
     });
 
     $(".partition").click(function()
@@ -32,7 +77,7 @@ $(document).ready(function()
         
         var inputString = $(this).val();
         getNeuronData(inputString);
-
+        findNeurons(inputString);
     });
 
 
@@ -40,20 +85,22 @@ $(document).ready(function()
     {
         var inputString = $(this).val();
         getNeuronData(inputString);
+        findNeurons(inputString);
     })
 }); 
 
-//using custom WHERE 
+//Function to get the nodes data from specified PHP file.
 function getNeuronData(inputString)
 {
-    //console.log(inputString);
     $.ajax(
     {   
-        url:"nodes.php",
+        url:"php/nodes.php",
         data: inputString,
         success:function(result) 
         {
             removeGraph(); 
+
+            //Parse the JSON retrived from the PHP Script
             var decoded_neuron = JSON.parse(result);
 
             populateNodes(decoded_neuron);
@@ -62,6 +109,8 @@ function getNeuronData(inputString)
     });
 }
 
+//When the node data has been parsed,
+//Populate the nodes
 function populateNodes(decoded_neuron)
 {
     graph.nodes = [];
@@ -81,13 +130,12 @@ function populateNodes(decoded_neuron)
     }
 }
 
-
-
+//function to get the edge JSON from specified PHP file.
 function getConnectionData(inputString)
 {
     $.ajax(
     {   
-        url:"edges.php",
+        url:"php/edges.php",
         data: inputString,
         success:function(result) 
         {
@@ -99,11 +147,10 @@ function getConnectionData(inputString)
     });
 }
 
-
-
+//function to populate edges
 function populateConnections(decoded_connections) 
 {
-	
+    //When the Edges have been parsed, loop through and add them to Edges.	
     for(var i=0; i<decoded_connections.length;i++) 
     {
         var source;
@@ -128,6 +175,7 @@ function populateConnections(decoded_connections)
       }
 }
 
+//remove all contents of the graph.
 function removeGraph()
 {
     graph.nodes = [];
@@ -135,6 +183,11 @@ function removeGraph()
     d3.select("svg").remove();
 }
 
+/*Third-party code was used here to help render the graph.
+I have made changes to the code in order to make the graph as my own.
+
+D3.js is licenced under the BSD licence.
+*/
 function drawGraph()
 {
     var data = 
@@ -143,25 +196,33 @@ function drawGraph()
 	'edges': graph.edges
     };
 
-    var w = 900;
-    var h = 800;
+    var w = 850;
+    var h = 750;
 
     //Initialize a default force layout, using the nodes and edges from data
     var force = d3.layout.force()
     .nodes(data.nodes)
     .links(data.edges)
     .size([w, h])
-    .linkDistance(100)
+    .linkDistance(275)
     .gravity(.05)
-    .charge([-120])
+    .charge([-70])
     .start();
     
-
-  
     //Create SVG element
     var svg = d3.select("#graph").append("svg")
     .attr("width", w)
     .attr("height", h);
+
+    //create a border to surround the graph
+    var borderPath = svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("height", h)
+    .attr("width", w)
+    .style("stroke", "black")
+    .style("fill", "none")
+    .style("stroke-width", 1);
 
 
     //Create edges as lines
@@ -199,10 +260,7 @@ function drawGraph()
      .attr("font-family", "sans-serif")
      .attr("font-size", "9px");
 
-
-
-
-    //Every time the simulation "ticks", this will be called
+    //This is called everytime the simulation ticks
     force.on("tick", function() 
     {
          texts.attr("transform", function(d) {  return "translate(" + d.x + "," + d.y + ")";  });
@@ -215,4 +273,4 @@ function drawGraph()
         nodes.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
     });
-}//end of drawGraph function
+}

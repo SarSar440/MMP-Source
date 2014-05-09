@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title> Nervous System of C. elegans</title>
+      <link href="../css/bootstrap.min.css" rel="stylesheet">
+      
+  </head>
+  <body>
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">A Web-based Simulation describing the Neurons and Connections of Nervous System of the C.elegans </a>
+                   </div>
+                  <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../index.html">Home</a></li>
+                           <li><a href="../Simulations/simulations.html">Behaviours</a></li>
+                        <li><a href="OrganMuscleGraph.html">Organs &#38; Muscles</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </div>
+
+          <div class="col-md-4">
+                 <div id="showRegion">
+                  <h1>Network graph <h1>
+                  <h4> View by Region </h4>
+                  <button id="head" class=" btn btn-danger"> Head </button>
+                   <button id="mid" class=" btn btn-success"> Mid-body </button>
+                   <button id="tail" class=" btn btn-primary"> Tail </button>
+               </div>
+            
+            <div id='HRegionSort'>
+                  <h3> Head Neuron and Connections </h3>
+                  <p> Nervous system Synapse Types </p>
+                  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'EJ' "> Electric Junction  </button>
+                  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'NMJ' "> Neuromuscular Junction  </button>
+
+                  <h4> Chemical synapses: </h4> 
+                  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'S' "> Send  </button>
+                  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'Sp' "> Send-poly  </button>
+                 <!--  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'R' "> Recieve</button> -->
+                  <button class='HconnectionType btn btn-default' value="n.soma_region &#61;'H' AND c.connection_type &#61; 'Rp' "> Recieve-poly  </button>
+
+                  <h4> Sort by neuron position: </h4>
+                  <button class='Hneuronposition btn btn-default' value="n.soma_region &#61;'H' AND n.neuron_name LIKE '&#37;L'"> Left Neurons </button>
+                  <button class='Hneuronposition btn btn-default' value="n.soma_region &#61;'H' AND n.neuron_name LIKE '&#37;R'"> Right Neurons </button>
+              </div>
+
+            <div id="MRegionSort">
+                    <h3> Mid-body Neuron and Connections </h3>
+                    <p> Nervous system Synapse Types </p>
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'EJ' "> Electric Junction  </button>
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'NMJ' "> Neuromuscular Junction  </button>
+                    
+                   <h4> Chemical synapses: </h4> 
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'S' "> Send  </button>
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'Sp' "> Send-poly  </button>
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'R' "> Recieve</button>
+                    <button class='MconnectionType btn btn-default' value="n.soma_region &#61;'M' AND c.connection_type &#61; 'Rp' "> Recieve-poly  </button>
+
+                    <h4> Sort by neuron position:</h4>
+                    <button class='Mneuronposition btn btn-default' value="n.soma_region &#61;'M' AND n.neuron_name LIKE '&#37;L'"> Left Neurons </button>
+                    <button class='Mneuronposition btn btn-default' value="n.soma_region &#61;'M' AND n.neuron_name LIKE '&#37;R'"> Right Neurons </button>
+              </div>
+
+              <div id="TRegionSort">
+                  <h3> Tail Neuron and Connections </h3>
+                  <p> Nervous system Synapse Types </p>
+                  <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'EJ' "> Electric Junction  </button>
+                  <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'NMJ' "> Neuromuscular Junction  </button>
+                  
+                 <h4> Chemical synapses: </h4> 
+                  <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'S' "> Send  </button>
+                  <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'Sp' "> Send-poly  </button>
+                 <!-- <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'R' "> Recieve</button> -->
+                  <button class='TconnectionType btn btn-default' value="n.soma_region &#61;'T' AND c.connection_type &#61; 'Rp' "> Recieve-poly  </button>
+
+                  <h4> Sort by neuron position: </h4>
+                  <button class='Tneuronposition btn btn-default' value="n.soma_region &#61;'T' AND n.neuron_name LIKE '&#37;L'"> Left Neurons </button>
+                  <button class='Tneuronposition btn btn-default' value="n.soma_region &#61;'T' AND n.neuron_name LIKE '&#37;R'"> Right Neurons </button>
+              </div>
+
+        </div>
+
+
+    <div class="col-md-8">
+          <div id="graph"></div>
+    </div>
+
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="../../js/bootstrap.min.js"></script>
+      <script src="DrawGraph.js"> </script>
+      <script src="Container.js"> </script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+      
+
+     </body>
+</html>

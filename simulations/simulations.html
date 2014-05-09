@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
       <meta charset="utf-8">
-      <title>Home</title>
-      <link href="css/bootstrap.min.css" rel="stylesheet">
+      <title>Simulations</title>
+      <link href="style.css" rel="stylesheet">
+      <link href="../css/bootstrap.min.css" rel="stylesheet">
        
 
   </head>
@@ -21,33 +22,34 @@
                    </div>
                   <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav navbar-right">
-                        <li ><a href="Graph/ConnectionsGraph.html">Nervous System</a></li>
-                        <li><a href="Graph/OrganMuscleGraph.html">Organs &#38; Muscles</a></li>
-                        <li><a href="simulations/simulations.html">Behaviours</a></li>
-                        </ul>
+                             <li><a href="../index.html">Home</a></li>
+                        <li ><a href="../Graph/ConnectionsGraph.html">Nervous System</a></li>
+                        <li><a href="../Graph/OrganMuscleGraph.html">Organs &#38; Muscles</a></li>
+                       </ul>
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </div>
 
           <div class="col-md-4">
-          
-          <a class="btn btn-default" href="Graph/ConnectionsGraph.html"> Nervous System Graph </a>
-          <br>
-          <a class="btn btn-default" href="Graph/OrganMuscleGraph.html"> Muscle/Organs Graph</a>
-          <br>
-           <a class="btn btn-default" href="simulations/simulations.html"> Simulations </a>
-           <br>
-           <a class="btn btn-default" href="http://celegansinterfaceproject.tumblr.com/"> Blog </a>
-           <a class="btn btn-default" href="https://github.com/afruitycat/MMP-Source"> Github </a>
+            <h1>Simulating Behaviours </h1>
+            <button class="btn btn-default" id="behaviour1">Behaviour1</button>
           </div>
+            
           <div class="col-md-8">
+            
+            <canvas id="canvas">
+              This text is displayed if your browser does not support HTML5 Canvas.
+              </canvas>
+              
+
+
           
-            <img src="celegansmarkeredit.png">
           </div>
 
     
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
           <script src="js/bootstrap.min.js"></script>
+          <script src="simulations.js"></script>
           <script src="http://d3js.org/d3.v3.min.js"></script>
 
      </body>

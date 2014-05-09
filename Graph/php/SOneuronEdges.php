@@ -1,24 +1,24 @@
 <?php
 
-	#Opens this database if it exists.
+	//Opens this database if it exists.
 	$db = new SQLite3('NeuronDB.sqlite');
 	
 	
-	//Default variables to be set with sql
+	//These variables are used to set the graph to the default view - by Mid-body region.
 	$region =  "M";
 	$soma_region = "n.soma_region ='" . $region . "' ";
 	$input = $soma_region;
 
-	//Re-assigning variable values into the WHERE statement. 
+	//Reassigns the new value to the WHERE Clause in the query below. 
 	if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '')
 	{
 		
 		$input = urldecode($_SERVER['QUERY_STRING']);
 	}
-
 	
-	//Query-  selects neuron1 and neuron2 and gets its neurons that are in the M region , and the target node being in the inner select
-	//The inner Select selects neuron2 for the target node which is in the M region
+	// This query involves multiple joins on both Neuron and Connection tables.
+	// These are needed in order to define the edges for this particular graph,
+	// the edges must match on the conditions that the source and target nodes also match the neuron_name within NeuronOrganMuscle table.
 	$connNeuron= $db->query("SELECT  c.neuron1_name, c.neuron2_name
 					FROM NeuronOrganMuscle AS o
 					JOIN Neuron AS n ON  n.neuron_name = o.neuron_name
@@ -32,10 +32,6 @@
 					WHERE $input
      					)
 				     ");
-	
-	
-
-	
 	//declare array for json
 	$jsonArray = [];	
 

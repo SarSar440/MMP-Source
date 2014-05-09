@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title> Sensory Organs/Body Muscle Neurons and Connections</title>
+      <link href="../css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+            <div class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">A Web-based Simulation describing the Neurons and Connections of Nervous System of the C.elegans </a>
+                   </div>
+                  <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="ConnectionsGraph.html">Nervous System </a></li>
+                        <li><a href="../simulations/simulations.html">Behaviours</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </div>
+
+          <div class="col-md-4">
+                 <div id="byRegion">
+                  <h1>Network graph </h1> 
+                  <h4> Sensory Organs/Body Muscles Neurons and Connections </h4>
+                  <button class="btn btn-info" id="sensory"> Sensory Organs</button>
+                  <button class="btn btn-warning" id="muscle"> Body Muscles </button>
+               </div>
+      
+            
+            <div id="soRegions">
+              <h3> Sensory Organs by Region</h3>
+              <p>Pick a Region to view specific Neurons that connect to Sensory Organs via Region.</p>
+              <button class='tissue btn btn-danger' value="o.landmark LIKE 'Sensory&#37;' AND n.soma_region &#61;'H' "> Head Sensory </button>
+              <button class='tissue btn btn-success' value="o.landmark LIKE 'Sensory&#37;' AND n.soma_region &#61;'M' ">Mid-body Sensory  </button>
+              <button class='tissue btn btn-primary' value="o.landmark LIKE 'Sensory&#37;' AND n.soma_region &#61;'T' ">Tail Sensory </button>
+            </div>
+
+
+            <div id="muscleRegions">
+                <h3> Body Muscle by Region</h3>
+              <p>Pick a Region to view specific Neurons that connect to Muscles via Region</p>
+              <button class='tissue btn btn-danger' value="  n.soma_region &#61;'H' AND (o.landmark LIKE 'MD&#37;' OR o.landmark LIKE 'MV&#37;')  AND o.landmark NOT LIKE 'MVU&#37;' "> Head Muscles </button>
+              <button class='tissue btn btn-success' value="n.soma_region &#61;'M' AND  (o.landmark LIKE 'MD&#37;' OR o.landmark LIKE 'MV&#37;') AND o.landmark NOT LIKE 'MVU&#37;' "> Mid-body Muscles </button>
+              <button class='tissue btn btn-primary' value=" n.soma_region &#61;'T' AND (o.landmark LIKE 'MD&#37;' OR o.landmark LIKE 'MV&#37;') AND o.landmark NOT LIKE 'MVU&#37;' "> Tail Muscles </button>
+            </div>
+        </div>
+              
+    <div class="col-md-8">
+          <div id="graph"></div>
+    </div>
+
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="../../js/bootstrap.min.js"></script>
+      <script src="DrawMuscleOrgan.js"> </script>
+      <script src="Container.js"> </script>
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+
+     </body>
+</html>

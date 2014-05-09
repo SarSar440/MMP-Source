@@ -1,27 +1,28 @@
 <?php
 
+/*
+The purpose of this script is to:
+	1. Connect to the database
+	2. Use a query to get the Results so that Nodes can be set for the graph.
+	3. The query results are turned into JSON Object for it to be used within the JavaScript file.
+
+ */
+
 	//Opens this database if it exists.
 	$db = new SQLite3('NeuronDB.sqlite');
 	
-	//These are default values
+	///These variables are used to set the graph to the default view - by Mid-body region.
 	$region = "M";
 	$soma_region = "n.soma_region = '" . $region . "' ";
 	$input = $soma_region;
 
-	//Re-assigning input statement. 
+	//Reassigns the new value to the WHERE Clause in the query below. 
 	if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '')
 	{
 	    $input = urldecode($_SERVER['QUERY_STRING']);
 	}
 
-	//Query for displaying neurons, and removing the duplicates by joining the Connection table
-	//and then checking all neurons that belong in the Midbody by default
-	//
-	//This query is for obtaining neurons that exist in the connection neuron_1
-	//Neuron1 in Connections is the source node.
-	//
 	//The joining of the two tables neuron and connections on the condition that neuron name matched neuron1 name
-	//
 	$neuronNames= $db->query("SELECT  DISTINCT n.neuron_name 
 						FROM NeuronOrganMuscle AS o
 						JOIN Neuron AS n ON  n.neuron_name = o.neuron_name
@@ -32,15 +33,15 @@
 	//declare an Array variable
 	$jsonArray = [];	
 
-	#loop & populate data.
+	//loop through all the rows and add the results onto the Array.
 	while ($row = $neuronNames->fetchArray()) 
 	{
-		#push elements onto the end of the array..
-		array_push($jsonArray, $row);
+	    //push elements onto the Array Object.
+	    array_push($jsonArray, $row);
 	}
 
-	#terminate connection
+	//terminate connection
 	$db->close();
 
-	#JSON encodes the added elements into JSON objects.
+	//SON encodes the added elements into JSON objects.
 	echo json_encode($jsonArray);
